@@ -37,14 +37,8 @@ namespace HolidayWebApplication.Controllers
             return View("ListProperties", _properties);
         }
 
-        public IActionResult ListAvailable(DateTime? start, DateTime? end)
+        public IActionResult ListAvailable(DateTime start, DateTime end)
         {
-            if (!start.HasValue || !end.HasValue)
-            {
-                ModelState.AddModelError(string.Empty, "Both start and end dates are required");
-                return View("ListProperties", new List<PropertyDetailsModel>());
-            }
-
             var availableProperties = _properties
                 .Where(p => p.BookedDates.All(d => d < start || d > end))
                 .ToList();
