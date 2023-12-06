@@ -1,0 +1,38 @@
+﻿@model PropertyDetailsModel
+
+@{
+    ViewBag.Title = "Property details";
+}
+
+<h2>Property details</h2>
+<br />
+
+<div class="col-sm-auto col-md-auto col-lg-auto">
+    <div class="card">
+
+        <div class="card-header">
+            <h4>@Model.Name</h4>
+            <h8>@Model.Description</h8>
+        </div>
+
+        <div class="card-body">
+            <b>@Model.Blurb</b> <br />
+            Location: @Model.Location <br />
+            Number of bedrooms: @Model.NumberOfBedrooms <br />
+            Cost per night: @Model.CostPerNight.ToString("c") <br />
+
+            Amenities: <br />
+            @foreach (var amenitie in Model.Amenities)
+            {
+                <i> - @amenitie</i> <br />
+            }
+
+            BookedDates: <br />
+            @foreach (var BookedDate in Model.BookedDates)
+            {
+                <i> - @BookedDate.ToString("dd/MM/yyyy")</i> <br />
+            }
+        </div>
+
+    </div>
+</div>

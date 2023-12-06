@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PropertyListingModel>
+
+@{
+    ViewBag.Title = "Properties";
+}
+
+<h2>All properties</h2>
+<br />
+
+<div class="row">
+    @foreach (var property in Model)
+    {
+        <div class="col-sm-auto col-md-auto col-lg-auto">
+            <div class="card">
+
+                <div class="card-header">
+                    <h4>
+                        <a asp-controller="PropertyListing" asp-action="ViewPropertyDetails" asp-route-id=@property.Id>@property.Name</a>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <b>@property.Blurb</b> <br />
+                    Location: @property.Location <br />
+                    Number of bedrooms: @property.NumberOfBedrooms
+                </div>
+
+                <div class="card-footer">
+                    Cost per night: @property.CostPerNight.ToString("c")
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
