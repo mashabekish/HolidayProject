@@ -14,8 +14,7 @@ namespace HolidayDomain.Repositories
                 NumberOfBedrooms = 3,
                 CostPerNight = 350,
                 Description = "Very comfortable and nice for a relaxing holiday",
-                Amenities = new() { "Swimming pool", "Terrace", "Barbecue" },
-                BookedDates = new() { DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-9), DateTime.Now.AddDays(-8) }
+                BookedNights = new()
             },
             new () {
                 Id = 2,
@@ -25,8 +24,7 @@ namespace HolidayDomain.Repositories
                 NumberOfBedrooms = 7,
                 CostPerNight = 730,
                 Description = "Very presentable and attractive house",
-                Amenities = new() { "Garden", "Terrace", "Pond" },
-                BookedDates = new() { DateTime.Now.AddDays(-9), DateTime.Now.AddDays(-8), DateTime.Now.AddDays(-7) }
+                BookedNights = new()
             }
         };
 

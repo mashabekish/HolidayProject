@@ -20,7 +20,7 @@ namespace HolidayWebApplication.Controllers
         public IActionResult ListAvailable(DateTime start, DateTime end)
         {
             var availableProperties = _repository.Properties
-                .Where(p => p.BookedDates.All(d => d < start || d > end))
+                //.Where(p => p.BookedNights.All(d => d < start || d > end))
                 .ToList();
             return View("ListProperties", availableProperties);
         }

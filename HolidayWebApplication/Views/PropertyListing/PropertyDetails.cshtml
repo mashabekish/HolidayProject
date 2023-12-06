@@ -21,17 +21,11 @@
             Number of bedrooms: @Model.NumberOfBedrooms <br />
             Cost per night: @Model.CostPerNight.ToString("c") <br />
 
-            Amenities: <br />
-            @foreach (var amenitie in Model.Amenities)
-            {
-                <i> - @amenitie</i> <br />
-            }
-
-            BookedDates: <br />
+@*             BookedDates: <br />
             @foreach (var BookedDate in Model.BookedDates)
             {
                 <i> - @BookedDate.ToString("MM/dd/yyyy")</i> <br />
-            }
+            } *@
         </div>
 
     </div>

@@ -1,5 +1,5 @@
+using HolidayDomain;
 using HolidayDomain.Repositories;
-using HolidayWebApplication.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

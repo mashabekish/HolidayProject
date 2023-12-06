@@ -5,8 +5,7 @@ namespace HolidayWebApplication.Models
     public class PropertyDetailsModel : PropertyListingModel
     {
         public string? Description { get; set; }
-        public List<string> Amenities { get; set; } = new();
-        public List<DateTime> BookedDates { get; set; } = new();
+        public List<DateTime> BookedNights { get; set; } = new();
 
         public Property ToPropertyModel(int id)
         {
@@ -18,9 +17,7 @@ namespace HolidayWebApplication.Models
                 Blurb = Blurb,
                 Location = Location,
                 NumberOfBedrooms = NumberOfBedrooms,
-                CostPerNight = CostPerNight,
-                Amenities = Amenities,
-                BookedDates = BookedDates
+                CostPerNight = CostPerNight
             };
         }
     }
