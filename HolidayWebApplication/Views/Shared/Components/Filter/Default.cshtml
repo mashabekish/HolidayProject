@@ -1,0 +1,13 @@
+﻿<div>
+    <form asp-action="ListAvailable" asp-controller="PropertyListing" method="get">
+        <label for="startDate">Start date:</label>
+        <input type="text" id="startDate" name="start" placeholder="MM/DD/YYY" />
+
+        <label for="endDate">End date:</label>
+        <input type="text" id="endDate" name="end" placeholder="MM/DD/YYYY" />
+
+        <button type="submit">Search</button>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </form>
+</div>

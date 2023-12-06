@@ -1,5 +1,6 @@
 ﻿using HolidayWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HolidayWebApplication.Controllers
 {
@@ -36,10 +37,18 @@ namespace HolidayWebApplication.Controllers
             return View("ListProperties", _properties);
         }
 
-        public IActionResult ListAvailable(DateTime from, DateTime to)
+        public IActionResult ListAvailable(DateTime? start, DateTime? end)
         {
-            //TODO Filtering
-            return View("ListProperties", _properties);
+            if (!start.HasValue || !end.HasValue)
+            {
+                ModelState.AddModelError(string.Empty, "Both start and end dates are required");
+                return View("ListProperties", new List<PropertyDetailsModel>());
+            }
+
+            var availableProperties = _properties
+                .Where(p => p.BookedDates.All(d => d < start || d > end))
+                .ToList();
+            return View("ListProperties", availableProperties);
         }
 
         public IActionResult ViewPropertyDetails(int id)
