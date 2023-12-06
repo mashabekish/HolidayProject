@@ -6,7 +6,7 @@ namespace HolidayDomain
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        DbSet<Property> Properties { get; set; }
+        public DbSet<Property> Properties { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

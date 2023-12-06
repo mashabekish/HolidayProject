@@ -2,7 +2,7 @@
 
 namespace HolidayDomain.Repositories
 {
-    public class DummyPropertyRepository : IPropertyRepository
+    public class DummyPropertyRepository
     {
         private readonly List<Property> _properties = new()
         {
@@ -28,11 +28,15 @@ namespace HolidayDomain.Repositories
             }
         };
 
-        public IEnumerable<Property> Properties => _properties;
+        public IEnumerable<Property> GetAll()
+        {
+            return _properties;
+        }
 
-        public void AddProperty(Property property)
+        public Property Add(Property property)
         {
             _properties.Add(property);
+            return property;
         }
     }
 }

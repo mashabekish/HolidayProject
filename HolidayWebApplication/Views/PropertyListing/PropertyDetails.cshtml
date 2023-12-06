@@ -1,4 +1,4 @@
-﻿@model HolidayDomain.Entities.Property
+﻿@model PropertyDetailsModel
 
 @{
     ViewBag.Title = "Property details";
@@ -21,11 +21,11 @@
             Number of bedrooms: @Model.NumberOfBedrooms <br />
             Cost per night: @Model.CostPerNight.ToString("c") <br />
 
-@*             BookedDates: <br />
-            @foreach (var BookedDate in Model.BookedDates)
+            BookedNights: <br />
+            @foreach (var bookedNight in Model.BookedNights)
             {
-                <i> - @BookedDate.ToString("MM/dd/yyyy")</i> <br />
-            } *@
+                <i> - @bookedNight.ToString("mm/dd/yyyy")</i> <br />
+            }
         </div>
 
     </div>

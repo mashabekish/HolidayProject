@@ -9,6 +9,6 @@
         public string Location { get; set; }
         public int NumberOfBedrooms { get; set; }
         public decimal CostPerNight { get; set; }
-        public List<BookedNight> BookedNights { get; set; }
+        public List<BookedNight> BookedNights { get; set; } = new();
     }
 }

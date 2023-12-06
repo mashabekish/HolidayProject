@@ -4,7 +4,9 @@ namespace HolidayDomain.Repositories
 {
     public interface IPropertyRepository
     {
-        IEnumerable<Property> Properties { get; }
-        void AddProperty(Property property);
+        IEnumerable<Property> GetAll();
+        IEnumerable<Property> GetAvailable(DateTime start, DateTime end);
+        Property? GetById(int id);
+        Property Add(Property property);
     }
 }

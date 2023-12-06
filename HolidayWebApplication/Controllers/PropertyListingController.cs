@@ -1,4 +1,5 @@
 ﻿using HolidayDomain.Repositories;
+using HolidayWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HolidayWebApplication.Controllers
@@ -14,25 +15,26 @@ namespace HolidayWebApplication.Controllers
 
         public IActionResult ListAll()
         {
-            return View("ListProperties", _repository.Properties.ToList());
+            var properties = _repository.GetAll()
+                .Select(p => new PropertyListingModel(p));
+            return View("ListProperties", properties);
         }
 
         public IActionResult ListAvailable(DateTime start, DateTime end)
         {
-            var availableProperties = _repository.Properties
-                //.Where(p => p.BookedNights.All(d => d < start || d > end))
-                .ToList();
-            return View("ListProperties", availableProperties);
+            var properties = _repository.GetAvailable(start, end)
+                .Select(p => new PropertyListingModel(p));
+            return View("ListProperties", properties);
         }
 
         public IActionResult ViewPropertyDetails(int id)
         {
-            var property = _repository.Properties.FirstOrDefault(p => p.Id == id);
+            var property = _repository.GetById(id);
 
             if (property == null)
                 return NotFound();
 
-            return View("PropertyDetails", property);
+            return View("PropertyDetails", new PropertyDetailsModel(property));
         }
     }
 }

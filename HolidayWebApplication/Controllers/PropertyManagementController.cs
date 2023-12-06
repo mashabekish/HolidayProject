@@ -23,9 +23,8 @@ namespace HolidayWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                var lastPropertyId = _repository.Properties.Last().Id;
-                var property = propertyDetails.ToPropertyModel(lastPropertyId++);
-                _repository.AddProperty(property);
+                var property = propertyDetails.ToPropertyModel();
+                _repository.Add(property);
             }
             return View();
         }

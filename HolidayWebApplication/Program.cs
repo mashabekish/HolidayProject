@@ -23,7 +23,7 @@ public class Program
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
 
-        builder.Services.AddSingleton<IPropertyRepository, DummyPropertyRepository>();
+        builder.Services.AddScoped<IPropertyRepository, EfPropertyRepository>();
 
         var app = builder.Build();
 

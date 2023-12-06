@@ -1,17 +1,28 @@
-﻿namespace HolidayWebApplication.Models
+﻿using HolidayDomain.Entities;
+
+namespace HolidayWebApplication.Models
 {
     public class PropertyListingModel
     {
+        public PropertyListingModel()
+        {
+        }
+
+        public PropertyListingModel(Property property)
+        {
+            Id = property.Id;
+            Name = property.Name;
+            Blurb = property.Blurb;
+            Location = property.Location;
+            NumberOfBedrooms = property.NumberOfBedrooms;
+            CostPerNight = property.CostPerNight;
+        }
+
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string? Blurb { get; set; }
-
         public string Location { get; set; }
-
         public int NumberOfBedrooms { get; set; }
-
         public decimal CostPerNight { get; set; }
     }
 }
