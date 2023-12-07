@@ -70,9 +70,11 @@
             var end = new Date(endDateElement.value);
             var unavailableDates = [];
 
-            for (var currentDate = start; currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
+            var startDate = start.setDate(start.getDate() + 1);
+
+            for (var currentDate = new Date(startDate); currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
                 var dateString = currentDate.toISOString().split('T')[0];
-                if (currentDate != start && disabledEndDates.includes(dateString)) {
+                if (disabledEndDates.includes(dateString)) {
                     unavailableDates.push(formatDate(currentDate));
                 }
             }

@@ -25,6 +25,8 @@ namespace HolidayWebApplication.Controllers
             {
                 var property = propertyDetails.ToPropertyModel();
                 _repository.Add(property);
+
+                ModelState.Clear();
             }
             return View();
         }
