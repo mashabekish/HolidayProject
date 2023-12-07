@@ -25,5 +25,7 @@ namespace HolidayDomain.Entities
         public decimal CostPerNight { get; set; }
 
         public List<BookedNight> BookedNights { get; set; } = new();
+
+        public List<PropertyImage> Images { get; set; } = new();
     }
 }

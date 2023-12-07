@@ -24,21 +24,25 @@
 <div id="dateErrorMessage" class="text-danger"></div>
 <br />
 
-<div class="col-sm-auto col-md-auto col-lg-auto">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     <div class="card">
+        <div class="card shadow-sm">
 
-        <div class="card-header">
-            <h4>@Model.Name</h4>
-            <h8>@Model.Description</h8>
+            <img class="bd-placeholder-img card-img-top" height="225" src="@Model.Images.FirstOrDefault()" alt="Property Image" />
+
+            <div class="card-header">
+                <h4>@Model.Name</h4>
+                <h8>@Model.Description</h8>
+            </div>
+
+            <div class="card-body">
+                <b>@Model.Blurb</b> <br />
+                Location: @Model.Location <br />
+                Number of bedrooms: @Model.NumberOfBedrooms <br />
+                Cost per night: @Model.CostPerNight.ToString("c") <br />
+            </div>
+
         </div>
-
-        <div class="card-body">
-            <b>@Model.Blurb</b> <br />
-            Location: @Model.Location <br />
-            Number of bedrooms: @Model.NumberOfBedrooms <br />
-            Cost per night: @Model.CostPerNight.ToString("c") <br />
-        </div>
-
     </div>
 </div>
 

@@ -1,0 +1,19 @@
+﻿@model AddImageModel
+
+@{
+    ViewBag.Title = "Add image";
+}
+
+<h2>Add image</h2>
+<br />
+
+<form method="post" action="@Url.Action("UploadImage", "PropertyManagement")" enctype="multipart/form-data">
+    <input type="hidden" name="propertyId" value="@Model.PropertyId" />
+
+    <label for="image">Choose image:</label>
+    <input type="file" id="image" name="image" />
+    <br />
+    <br />
+
+    <button type="submit">Upload image</button>
+</form>

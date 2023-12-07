@@ -14,12 +14,15 @@ namespace HolidayDomain.Repositories
 
         public IEnumerable<Property> GetAll()
         {
-            return _context.Properties.AsNoTracking().ToList();
+            return _context.Properties.AsNoTracking()
+                .Include(p => p.Images)
+                .ToList();
         }
 
         public IEnumerable<Property> GetAvailable(DateTime start, DateTime end)
         {
             return _context.Properties.AsNoTracking()
+                .Include(p => p.Images)
                 .Where(p => p.BookedNights
                     .Select(n => n.Night)
                     .All(d => d <= start || d > end))
@@ -29,6 +32,7 @@ namespace HolidayDomain.Repositories
         public Property? GetById(int id)
         {
             return _context.Properties.AsNoTracking()
+                .Include(p => p.Images)
                 .Include(p => p.BookedNights)
                 .FirstOrDefault(p => p.Id == id);
         }
@@ -56,6 +60,22 @@ namespace HolidayDomain.Repositories
             }
             _context.SaveChanges();
             return property;
+        }
+
+        public PropertyImage AddPropertyImage(int propertyId, string imageUrl)
+        {
+            var property = _context.Properties
+                .First(p => p.Id == propertyId);
+
+            var propertyImage = new PropertyImage
+            {
+                PropertyId = propertyId,
+                ImageUrl = imageUrl
+            };
+
+            property.Images.Add(propertyImage);
+            _context.SaveChanges();
+            return propertyImage;
         }
     }
 }

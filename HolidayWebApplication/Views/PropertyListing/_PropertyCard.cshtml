@@ -1,23 +1,25 @@
 ﻿@model PropertyListingModel
 
 <div class="card">
+    <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" height="225" src="@Model.Images.FirstOrDefault()" alt="Property Image" />
 
-    <div class="card-header">
-        <h4>
-            <a asp-controller="PropertyListing" asp-action="ViewPropertyDetails" asp-route-id=@Model.Id>
-                @Model.Name
-            </a>
-        </h4>
+        <div class="card-header">
+            <h4>
+                <a asp-controller="PropertyListing" asp-action="ViewPropertyDetails" asp-route-id=@Model.Id>
+                    @Model.Name
+                </a>
+            </h4>
+        </div>
+
+        <div class="card-body">
+            <b>@Model.Blurb</b> <br />
+            Location: @Model.Location <br />
+            Number of bedrooms: @Model.NumberOfBedrooms
+        </div>
+
+        <div class="card-footer">
+            Cost per night: @Model.CostPerNight.ToString("c")
+        </div>
     </div>
-
-    <div class="card-body">
-        <b>@Model.Blurb</b> <br />
-        Location: @Model.Location <br />
-        Number of bedrooms: @Model.NumberOfBedrooms
-    </div>
-
-    <div class="card-footer">
-        Cost per night: @Model.CostPerNight.ToString("c")
-    </div>
-
 </div>
