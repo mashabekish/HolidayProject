@@ -12,13 +12,17 @@ namespace HolidayWebApplication.Models
             : base(property)
         {
             Description = property.Description;
-            BookedDates = property.BookedNights
+            BookedStartDates = property.BookedNights
                 .Select(n => n.Night.AddDays(-1))
+                .ToList();
+            BookedEndDates = property.BookedNights
+                .Select(n => n.Night)
                 .ToList();
         }
 
         public string? Description { get; set; }
-        public List<DateTime> BookedDates { get; set; } = new();
+        public List<DateTime> BookedStartDates { get; set; } = new();
+        public List<DateTime> BookedEndDates { get; set; } = new();
 
         public Property ToPropertyModel()
         {

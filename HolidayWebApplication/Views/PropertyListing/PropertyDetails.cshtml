@@ -8,11 +8,17 @@
 <br />
 
 <div>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" name="start" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+    <form method="post" action="@Url.Action("BookProperty", "Booking")">
+        <input type="hidden" name="propertyId" value="@Model.Id" />
 
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="end" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" required />
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="start" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="end" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" required />
+
+        <button type="submit">Book property</button>
+    </form>
 </div>
 
 <div id="dateErrorMessage" class="text-danger"></div>
@@ -38,8 +44,11 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var disabledDates = @Html.Raw(Json.Serialize(Model.BookedDates.Select(date => date.ToString("yyyy-MM-dd"))));
+        var disabledStartDates = @Html.Raw(Json.Serialize(Model.BookedStartDates.Select(date => date.ToString("yyyy-MM-dd"))));
+        var disabledEndDates = @Html.Raw(Json.Serialize(Model.BookedEndDates.Select(date => date.ToString("yyyy-MM-dd"))));
+
         var dateErrorMessage = document.getElementById("dateErrorMessage");
+
         var endDateElement = document.getElementById("endDate");
         var startDateElement = document.getElementById("startDate");
 
@@ -63,7 +72,7 @@
 
             for (var currentDate = start; currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
                 var dateString = currentDate.toISOString().split('T')[0];
-                if (disabledDates.includes(dateString)) {
+                if (currentDate != start && disabledEndDates.includes(dateString)) {
                     unavailableDates.push(formatDate(currentDate));
                 }
             }
@@ -81,7 +90,7 @@
             startDate.setDate(startDate.getDate() + 1);
             endDateElement.min = startDate.toISOString().split('T')[0];
 
-            if (disabledDates.includes(this.value)) {
+            if (disabledStartDates.includes(this.value)) {
                 showError("Start date is not available");
                 this.value = '';
             } else {
@@ -95,7 +104,7 @@
         document.getElementById("endDate").addEventListener("input", function () {
             clearError();
 
-            if (disabledDates.includes(this.value)) {
+            if (disabledEndDates.includes(this.value)) {
                 showError("End date is not available");
                 this.value = '';
             } else {

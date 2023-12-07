@@ -39,5 +39,23 @@ namespace HolidayDomain.Repositories
             _context.SaveChanges();
             return property;
         }
+
+        public Property BookProperty(int propertyId, DateTime start, DateTime end)
+        {
+            var property = _context.Properties
+                .Include(p => p.BookedNights)
+                .First(p => p.Id == propertyId);
+
+            for (var date = start.AddDays(1); date <= end; date = date.AddDays(1))
+            {
+                var bookedNight = new BookedNight
+                {
+                    Night = date
+                };
+                property.BookedNights.Add(bookedNight);
+            }
+            _context.SaveChanges();
+            return property;
+        }
     }
 }

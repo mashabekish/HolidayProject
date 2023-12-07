@@ -8,5 +8,6 @@ namespace HolidayDomain.Repositories
         IEnumerable<Property> GetAvailable(DateTime start, DateTime end);
         Property? GetById(int id);
         Property Add(Property property);
+        Property BookProperty(int propertyId, DateTime start, DateTime end);
     }
 }
