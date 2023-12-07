@@ -43,5 +43,13 @@ namespace HolidayDomain.Repositories
                 .Select(n => n.Night)
                 .All(d => d <= startDate || d > endDate);
         }
+
+        public IEnumerable<Booking> GetBookingsByUser(string? userId)
+        {
+            return _context.Bookings
+                .Include(b => b.Property)
+                .Where(b => b.UserId == userId)
+                .ToList();
+        }
     }
 }

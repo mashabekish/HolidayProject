@@ -1,0 +1,19 @@
+﻿@using HolidayDomain.Entities
+
+@model IEnumerable<Booking>
+
+@{
+    ViewBag.Title = "Your bookings";
+}
+
+<h2>Your bookings</h2>
+<br />
+
+<div class="row">
+    @foreach (var booking in Model)
+    {
+        <div class="col-sm-auto col-md-auto col-lg-auto">
+            <partial name="_BookingCard" model=booking />
+        </div>
+    }
+</div>
