@@ -7,6 +7,17 @@
 <h2>Property details</h2>
 <br />
 
+<div>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="start" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="end" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" required />
+</div>
+
+<div id="dateErrorMessage" class="text-danger"></div>
+<br />
+
 <div class="col-sm-auto col-md-auto col-lg-auto">
     <div class="card">
 
@@ -20,13 +31,79 @@
             Location: @Model.Location <br />
             Number of bedrooms: @Model.NumberOfBedrooms <br />
             Cost per night: @Model.CostPerNight.ToString("c") <br />
-
-            BookedNights: <br />
-            @foreach (var bookedNight in Model.BookedNights)
-            {
-                <i> - @bookedNight.ToString("mm/dd/yyyy")</i> <br />
-            }
         </div>
 
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var disabledDates = @Html.Raw(Json.Serialize(Model.BookedDates.Select(date => date.ToString("yyyy-MM-dd"))));
+        var dateErrorMessage = document.getElementById("dateErrorMessage");
+        var endDateElement = document.getElementById("endDate");
+        var startDateElement = document.getElementById("startDate");
+
+        function showError(message) {
+            dateErrorMessage.innerText = message;
+        }
+
+        function clearError() {
+            dateErrorMessage.innerText = '';
+        }
+
+        function formatDate(date) {
+            var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function checkUnavailableDates() {
+            var start = new Date(startDateElement.value);
+            var end = new Date(endDateElement.value);
+            var unavailableDates = [];
+
+            for (var currentDate = start; currentDate <= end; currentDate.setDate(currentDate.getDate() + 1)) {
+                var dateString = currentDate.toISOString().split('T')[0];
+                if (disabledDates.includes(dateString)) {
+                    unavailableDates.push(formatDate(currentDate));
+                }
+            }
+
+            if (unavailableDates.length > 0) {
+                showError("Unavailable dates between start date and end date: " + unavailableDates.join(', '));
+                endDateElement.value = '';
+            }
+        }
+
+        document.getElementById("startDate").addEventListener("input", function () {
+            clearError();
+
+            var startDate = new Date(this.value);
+            startDate.setDate(startDate.getDate() + 1);
+            endDateElement.min = startDate.toISOString().split('T')[0];
+
+            if (disabledDates.includes(this.value)) {
+                showError("Start date is not available");
+                this.value = '';
+            } else {
+                if (endDateElement.value != '') {
+                    checkUnavailableDates();
+                } else
+                    clearError();
+            }
+        });
+
+        document.getElementById("endDate").addEventListener("input", function () {
+            clearError();
+
+            if (disabledDates.includes(this.value)) {
+                showError("End date is not available");
+                this.value = '';
+            } else {
+                if (endDateElement.value != '') {
+                    checkUnavailableDates();
+                } else
+                    clearError();
+            }
+        });
+    });
+</script>
