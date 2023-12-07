@@ -2,7 +2,14 @@
 
 <div class="card">
     <div class="card shadow-sm">
-        <img class="bd-placeholder-img card-img-top" height="225" src="@Model.Images.FirstOrDefault()" alt="Property Image" />
+        @if (Model.Images.Any())
+        {
+            <img class="bd-placeholder-img card-img-top" height="225" src="@Model.Images.First()" alt="Property Image" />
+        }
+        else
+        {
+            <p>No image available</p>
+        }
 
         <div class="card-header">
             <h4>

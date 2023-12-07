@@ -25,6 +25,6 @@ namespace HolidayWebApplication.Models
         public string Location { get; set; }
         public int NumberOfBedrooms { get; set; }
         public decimal CostPerNight { get; set; }
-        public IEnumerable<string> Images { get; set; }
+        public IEnumerable<string> Images { get; set; } = new List<string>();
     }
 }
