@@ -12,16 +12,16 @@ namespace HolidayDomain.Repositories
             _context = context;
         }
 
-        public Booking? MakeBooking(int propertyId, DateTime startDate, DateTime endDate, string userEmail, string billingAddress)
+        public Booking? MakeBooking(Booking booking)
         {
             var property = _context.Properties
                 .Include(p => p.BookedNights)
-                .FirstOrDefault(p => p.Id == propertyId);
+                .FirstOrDefault(p => p.Id == booking.PropertyId);
 
-            if (property == null || !IsPropertyAvailable(property, startDate, endDate))
+            if (property == null || !IsPropertyAvailable(property, booking.StartDate, booking.EndDate))
                 return null;
 
-            for (var date = startDate.AddDays(1); date <= endDate; date = date.AddDays(1))
+            for (var date = booking.StartDate.AddDays(1); date <= booking.EndDate; date = date.AddDays(1))
             {
                 var bookedNight = new BookedNight
                 {
@@ -30,16 +30,7 @@ namespace HolidayDomain.Repositories
                 property.BookedNights.Add(bookedNight);
             }
 
-            var booking = new Booking
-            {
-                PropertyId = propertyId,
-                StartDate = startDate,
-                EndDate = endDate,
-                CostPerNight = property.CostPerNight,
-                //UserId = UserId,
-                UserEmail = userEmail,
-                BillingAddress = billingAddress
-            };
+            booking.CostPerNight = property.CostPerNight;
 
             _context.Bookings.Add(booking);
             _context.SaveChanges();

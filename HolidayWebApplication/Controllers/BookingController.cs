@@ -1,5 +1,7 @@
-﻿using HolidayDomain.Repositories;
+﻿using HolidayDomain.Entities;
+using HolidayDomain.Repositories;
 using HolidayWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HolidayWebApplication.Controllers
@@ -7,10 +9,13 @@ namespace HolidayWebApplication.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingRepository _repository;
+        private readonly UserManager<IdentityUser> _manager;
 
-        public BookingController(IBookingRepository repository)
+        public BookingController(
+            IBookingRepository repository, UserManager<IdentityUser> manager)
         {
             _repository = repository;
+            _manager = manager;
         }
 
         [HttpPost]
@@ -26,9 +31,21 @@ namespace HolidayWebApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitBooking(int propertyId, DateTime startDate, DateTime endDate, string userEmail, string billingAddress)
+        public IActionResult SubmitBooking(
+            int propertyId, DateTime startDate, DateTime endDate, string userEmail, string billingAddress)
         {
-            var booking = _repository.MakeBooking(propertyId, startDate, endDate, userEmail, billingAddress);
+            var userId = _manager.Users.FirstOrDefault()?.Id;
+
+            var booking = new Booking
+            {
+                PropertyId = propertyId,
+                StartDate = startDate,
+                EndDate = endDate,
+                UserId = userId,
+                UserEmail = userEmail,
+                BillingAddress = billingAddress
+            };
+            booking = _repository.MakeBooking(booking);
 
             if (booking != null)
                 return View("BookingSuccess", booking);
