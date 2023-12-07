@@ -24,6 +24,7 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddScoped<IPropertyRepository, EfPropertyRepository>();
+        builder.Services.AddScoped<IBookingRepository, EfBookingRepository>();
 
         var app = builder.Build();
 
